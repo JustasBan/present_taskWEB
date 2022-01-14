@@ -1,21 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import serverComms from './services/serverComms'
-import List from './MainComponents/List'
-import Notification from './MainComponents/Notification'
+import serverComms from '../services/serverComms'
+import Notification from './Notification'
 
-/*const Notification = ({ message, className }) => {
-
-  if (message === null) {
-    return null
-  }
-
-  return (
-    <div className={className}>
-      {message}
-    </div>
-  )
-}*/
-
+//helper components
 const IndividualPost = ({ postArg }) => {
 
   return (
@@ -40,7 +27,7 @@ const Posts = ({ postsArg }) => {
   )
 }
 
-const App = () => {
+const List = () => {
 
   //notification helper functions:
   const showServerSuccess = () => {
@@ -114,4 +101,4 @@ const App = () => {
   )
 }
 
-export default App;
+export default List;
