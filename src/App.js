@@ -1,103 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import serverComms from './services/serverComms'
+import React from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import List from './MainComponents/List'
-import Notification from './MainComponents/Notification'
-
-const IndividualPost = ({ postArg }) => {
-
-  return (
-    <div>
-      <p>{postArg.userId} {postArg.id} {postArg.title}</p>
-      <div class="postBody">{postArg.body}</div>
-
-      <button>details</button>
-      <p>--------</p>
-    </div>
-  )
-}
-
-const Posts = ({ postsArg }) => {
-  return (
-    <div>
-      <h2>Posts List:</h2>
-      {postsArg.map(
-        post => <IndividualPost key={post.id} postArg={post} />
-      )}
-    </div>
-  )
-}
+import Menu from './MainComponents/Menu'
+import PostDetail from './MainComponents/PostDetail'
+import CreateForm from './MainComponents/CreateForm'
 
 const App = () => {
-
-  //notification helper functions:
-  const showServerSuccess = () => {
-
-    setNotificationMode('change')
-
-    setNotificationMessage(
-      'All data received successfuly'
-    )
-
-    console.log('GET promise fullfilled')
-
-    setTimeout(() => {
-      setNotificationMessage(null)
-    }, 5000)
-  }
-
-  const showServerFail = () => {
-
-    setNotificationMode('error')
-
-    setNotificationMessage(
-      'All data receive failed'
-    )
-
-    console.log('GET promise failed')
-
-    setTimeout(() => {
-      setNotificationMessage(null)
-    }, 5000)
-  }
-
-  //---------------------------------------------------------------------------
-
-  //states:
-  const [posts, setPosts] = useState([])
-  const [notificationMessage, setNotificationMessage] = useState(null)
-  const [notificationMode, setNotificationMode] = useState('')
-
-  //---------------------------------------------------------------------------
-
-  //effects:
-  useEffect(() => {
-    serverComms
-      .getAll()
-      .then(initialPost => {
-        //setting posts:
-        setPosts(initialPost)
-
-        //state awareness:
-        showServerSuccess()
-      })
-      .catch(() => {
-        showServerFail()
-      })
-  }, [])
-
-  //---------------------------------------------------------------------------
-
-  //handlers:
-
-
-
-  //---------------------------------------------------------------------------
-
   return (
-    <div>
-      <Notification message={notificationMessage} className={notificationMode} />
-      <Posts postsArg={posts} />
-    </div>
+    <Router>
+      <Menu />
+
+      <Routes>
+        <Route path="/" element={<List />} />
+        <Route path="/create" element={<CreateForm />} />
+        <Route path="/posts/:id" element={<PostDetail />} />
+      </Routes>
+    </Router>
   )
 }
 

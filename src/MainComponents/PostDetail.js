@@ -1,40 +1,25 @@
 import React, { useState, useEffect } from 'react'
+import { useParams } from "react-router-dom";
+
 import serverComms from '../services/serverComms'
 import Notification from './Notification'
-import {Link} from 'react-router-dom'
 
-//helper components:
-
-const IndividualPost = ({ postArg }) => {
+//helper components
+const Post = ({ postArg }) => {
 
   return (
     <div>
       <p>{postArg.userId} {postArg.id} {postArg.title}</p>
 
       <div className="postBody">{postArg.body}</div>
-
-      <Link to={`/posts/${postArg.id}`}>
-        <button>details</button>
-      </Link>
-      <p>--------</p>
     </div>
   )
 }
 
-const Posts = ({ postsArg }) => {
-  return (
-    <div>
-      <h2>Posts List:</h2>
-      {postsArg.map(
-        post => <IndividualPost key={post.id} postArg={post} />
-      )}
-    </div>
-  )
-}
+//------------------------------------------------------------
 
-//---------------------------------------------------------------------------
-
-const List = () => {
+//Main component
+const PostDetail = () => {
 
   //notification helper functions:
   const showServerSuccess = () => {
@@ -42,7 +27,7 @@ const List = () => {
     setNotificationMode('change')
 
     setNotificationMessage(
-      'All data received successfuly'
+      'Individual post data received successfuly'
     )
 
     console.log('GET promise fullfilled')
@@ -57,7 +42,7 @@ const List = () => {
     setNotificationMode('error')
 
     setNotificationMessage(
-      'All data receive failed'
+      'Individual post data receive failed'
     )
 
     console.log('GET promise failed')
@@ -68,35 +53,33 @@ const List = () => {
   }
 
   //states:
-  const [posts, setPosts] = useState([])
+  const [post, setPost] = useState([])
   const [notificationMessage, setNotificationMessage] = useState(null)
   const [notificationMode, setNotificationMode] = useState('')
+
+  //define key parameter (which is post's id)
+  let param = useParams().id;
 
   //effects:
   useEffect(() => {
     serverComms
-      .getAll()
-      .then(initialPosts => {
-        //setting posts:
-        setPosts(initialPosts)
-
-        //state awareness:
+      .getOne(param)
+      .then(initialPost => {
+        setPost(initialPost)
         showServerSuccess()
       })
-      .catch(() => {
-        showServerFail()
-      })
+      .catch(() => showServerFail())
   }, [])
 
   //handlers:
 
-  //results:
+  //return results:  
   return (
     <div>
       <Notification message={notificationMessage} className={notificationMode} />
-      <Posts postsArg={posts} />
+      <Post postArg={post} />
     </div>
   )
 }
 
-export default List;
+export default PostDetail;

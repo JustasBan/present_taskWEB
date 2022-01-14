@@ -8,7 +8,7 @@ const getAll = () => {
 }
 
 const getOne = id => {
-    const request = axios.get(baseUrl+ '/' + id)
+    const request = axios.get(baseUrl + '/' + id)
     return request.then(response => response.data)
 }
 
@@ -17,4 +17,4 @@ const create = newObject => {
     return request.then(response => response.data)
 }
 
-export default { getAll, getOne, create}
+export default { getAll, getOne, create }
