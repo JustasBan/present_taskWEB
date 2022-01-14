@@ -3,19 +3,6 @@ import serverComms from './services/serverComms'
 import List from './MainComponents/List'
 import Notification from './MainComponents/Notification'
 
-/*const Notification = ({ message, className }) => {
-
-  if (message === null) {
-    return null
-  }
-
-  return (
-    <div className={className}>
-      {message}
-    </div>
-  )
-}*/
-
 const IndividualPost = ({ postArg }) => {
 
   return (
