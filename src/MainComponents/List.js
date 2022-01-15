@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import serverComms from '../services/serverComms'
 import Notification from './Notification'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 //helper components:
 
@@ -87,8 +87,6 @@ const List = () => {
         showServerFail()
       })
   }, [])
-
-  //handlers:
 
   //results:
   return (

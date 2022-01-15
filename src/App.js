@@ -5,6 +5,7 @@ import Menu from './MainComponents/Menu'
 import PostDetail from './MainComponents/PostDetail'
 import CreateForm from './MainComponents/CreateForm'
 
+//Driver component:
 const App = () => {
   return (
     <Router>

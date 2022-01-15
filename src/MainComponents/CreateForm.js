@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import serverComms from '../services/serverComms'
 import Notification from './Notification'
 
-//Main component
+//Main form's component
 const CreateForm = () => {
 
     //notification helper functions:
-    const showServerSuccess = () => {
+    const showServerSuccess = ({ id }) => {
 
         setNotificationMode('change')
 
         setNotificationMessage(
-            'Individual post data sent (posted) successfuly'
+            `Post's '${id}' data sent (posted) successfuly`
         )
 
-        console.log('POST promise fullfilled')
+        console.log(`Post's '${id}' POST promise fullfilled`)
 
         setTimeout(() => {
             setNotificationMessage(null)
@@ -26,7 +26,7 @@ const CreateForm = () => {
         setNotificationMode('error')
 
         setNotificationMessage(
-            'Individual post data sending (posting) failed'
+            'Individual\'s data sending (posting) failed'
         )
 
         console.log('POST promise failed')
@@ -36,14 +36,43 @@ const CreateForm = () => {
         }, 5000)
     }
 
+    //default values
+    const USER_ID = 1
+
     //states:
-    const [posts, setPosts] = useState([])
+    const [newTitle, setNewTitle] = useState('')
+    const [newBody, setNewBody] = useState('')
     const [notificationMessage, setNotificationMessage] = useState(null)
     const [notificationMode, setNotificationMode] = useState('')
 
-    //Posting helper functions:
+    //handlers:
+    const handleTitleChange = (event) => {
+        console.log(`Title: ${event.target.value}`)
+        setNewTitle(event.target.value)
+    }
 
-    //TODO: need post requests, input capture, style inputs
+    const handleBodyChange = (event) => {
+        console.log(`Body: ${event.target.value}`)
+        setNewBody(event.target.value)
+    }
+
+    //Posting function:
+    const addPost = (event) => {
+        event.preventDefault()
+
+        let tempPostObj = {
+            title: newTitle,
+            body: newBody,
+            userId: USER_ID
+        }
+
+        serverComms
+            .create(tempPostObj)
+            .then(initialResponse => {
+                showServerSuccess(initialResponse)
+            })
+            .catch(() => showServerFail())
+    }
 
     //return results:  
     return (
@@ -52,18 +81,16 @@ const CreateForm = () => {
 
             <h2>Post form</h2>
 
-            <form>
-
+            <form onSubmit={addPost}>
                 <div>
-                    Title: <input />
+                    Title: <input value={newTitle} onChange={handleTitleChange} />
                     <br />
-                    Body: <input />
+                    Body: <input value={newBody} onChange={handleBodyChange} />
                 </div>
 
                 <div>
                     <button type="submit">add</button>
                 </div>
-
             </form>
         </div>
     )
