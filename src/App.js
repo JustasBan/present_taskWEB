@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import List from './MainComponents/List'
 import Menu from './MainComponents/Menu'
@@ -59,5 +59,3 @@ const App = () => {
 }
 
 export default App;
-
-//TODO: align text in "details" and "create" 

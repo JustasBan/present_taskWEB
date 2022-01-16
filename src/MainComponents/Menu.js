@@ -3,22 +3,22 @@ import {Link} from 'react-router-dom'
 
 /*
     DESCRIPTION:
-    simple menu component (CSS in index.css)
+    simple menu component
  */
 
 //navigation component:
 const Menu = () => {
     return (
         <nav>
-            <h3>Intership assignment:</h3>
+            <h3>Task by <i>Justas Baniulis</i></h3>
 
             <ul className='nav-links'>
                 <Link style={{color: 'white'}} to="/">
-                    <li>view all posts</li>
+                    <li>List</li>
                 </Link>
 
                 <Link style={{color: 'white'}} to="/create">
-                    <li>create new post</li>
+                    <li>Add new post</li>
                 </Link>
 
             </ul>

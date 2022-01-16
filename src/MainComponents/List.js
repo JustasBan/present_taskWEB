@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import serverComms from '../services/serverComms'
 import { useNavigate } from 'react-router-dom'
 
 //helper components:
+
+/*
+  Display individual table row
+  with received data of post
+*/
 
 const IndividualPost = ({ userId, id, title, body }) => {
 
@@ -23,19 +28,20 @@ const IndividualPost = ({ userId, id, title, body }) => {
   )
 }
 
-const Posts = ({ postsArg, loadingState}) => {
+/*
+  Display all table rows
+  with received data of all
+  posts we received and 
+  names of columns
+*/
 
+const Posts = ({ postsArg, loadingState }) => {
   if (loadingState === false) {
-    let centerComponent = {
-      justifyContent: "center",
-      display: "flex"
-    }
-
     return (
       <div >
-        <h2 style={centerComponent}>Posts list:</h2>
+        <h2 className='centerComponent'>Posts list:</h2>
 
-        <table style={centerComponent}>
+        <table className='centerComponent'>
           <tbody>
             <tr>
               <td>userId</td>
@@ -55,14 +61,23 @@ const Posts = ({ postsArg, loadingState}) => {
   }
   else {
     return (
-      <h2>Posts list loading...</h2>
+      <h2 className='centerComponent'>Posts list loading...</h2>
     )
   }
 }
 
+/*
+  Component does GET request,
+  and shows received data if successful,
+  else it infinately loads
+  (user is notified about failed
+  server interaction by "Notification" component
+  in "App" (same for success))
+*/
+
 //Main component:
-const List = ({showServerFail, showServerSuccess}) => {
-  
+const List = ({ showServerFail, showServerSuccess }) => {
+
   //states:
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)

@@ -2,35 +2,66 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import serverComms from '../services/serverComms'
 
+/*
+    DESCRIPTION:
+    Details page component, which
+    will create GET request to server,
+    from given Id (router provides it)
+
+    If successful, component displays
+    received details, else
+
+    it infinately shows "loading" -
+    user is notified, 
+    that server interaction failed
+    by "Notification" component in "App"
+    (same for success)
+ */
+
 //helper components
-const Post = ( {postArg, loading} ) => {
+const Post = ({ postArg, loading }) => {
 
   if (loading) {
     return (
-      <h3>Post loading...</h3>
+      <h2 className='centerComponent'>Posts list loading...</h2>
     )
   }
   else {
     return (
+      
       <div className='postWrap'>
-        <div className='postContainer'>
+        <h2 className='centerComponent'>Post details:</h2>
+        
+        <div className='postInnerWrap'>
           <h3 className='postProperty'>User id:</h3>
-          <h3 className='postPropertyValue'>{postArg.userId}</h3>
+
+          <div className='postValueWrap'>
+            <h3 className='postValue'>{postArg.userId}</h3>
+          </div>
         </div>
 
-        <div className='postContainer'>
+        <div className='postInnerWrap'>
           <h3 className='postProperty'>Post id:</h3>
-          <h3 className='postPropertyValue'>{postArg.id}</h3>
+
+          <div className='postValueWrap'>
+            <h3 className='postValue'>{postArg.id}</h3>
+          </div>
         </div>
 
-        <div className='postContainer'>
+        <div className='postInnerWrap'>
           <h3 className='postProperty'>Post title:</h3>
-          <h3 className='postPropertyValue'>{postArg.title}</h3>
+
+          <div className='postValueWrap'>
+            <h3 className='postValue'>{postArg.title}</h3>
+          </div>
         </div>
 
-        <div className='postContainer'>
+        <div className='postInnerWrap'>
           <h3 className='postProperty'>Post body:</h3>
-          <h3 className="postBody postPropertyValue">{postArg.body}</h3>
+
+          <div className='postValueWrap'>
+            <h3 className="postBody postValue">{postArg.body}</h3>
+          </div>
         </div>
       </div>
     )
@@ -38,7 +69,7 @@ const Post = ( {postArg, loading} ) => {
 }
 
 //Main component
-const PostDetail = ({showServerFail, showServerSuccess}) => {
+const PostDetail = ({ showServerFail, showServerSuccess }) => {
 
   //states:
   const [loading, setLoading] = useState(true)

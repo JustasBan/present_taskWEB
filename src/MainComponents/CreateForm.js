@@ -1,6 +1,17 @@
 import React, { useState } from 'react'
 import serverComms from '../services/serverComms'
 
+/*
+    DESCRIPTION:
+    New record form component
+    It will track input and
+    create POST request to server from it,
+    when "add" button is pressed
+    if request fails, user is notified
+    by "Notification" component in App 
+    (same for success)
+ */
+
 //Main form's component
 const CreateForm = ({showServerFail, showServerSuccess}) => {
 
@@ -44,23 +55,28 @@ const CreateForm = ({showServerFail, showServerSuccess}) => {
     return (
         <div>
             <div className='postWrap'>
-                <h2 className='formsWrap'>New record form</h2>
+                <h2 className='centerComponent'>New record:</h2>
 
                 <form onSubmit={addPost}>
                     <div className='formsWrap'>
-                        <h3 >Title:</h3>
-                        <textarea className='formsTextboxTitle' value={newTitle} onChange={handleTitleChange} />
+                        <h3>Title:</h3>
+                        <div className='formsWrapInner'>
+                            <textarea className='formsTextboxTitle' value={newTitle} onChange={handleTitleChange} />
+                        </div>
                     </div>
                     
                     <div className='formsWrap'>
-                        <h3 >Body:</h3>
-                        <textarea className='formsTextboxBody' value={newBody} onChange={handleBodyChange} />
+                        <h3>Body:</h3>
+                        <div className='formsWrapInner'>
+                            <textarea className='formsTextboxBody' value={newBody} onChange={handleBodyChange} />
+                        </div>
                     </div>
 
-                    <div className='formsWrap'>
+                    <div className='postWrap'>
                         <button className='formsButton' type="submit">Add</button>
                     </div>
                 </form>
+                
             </div>
         </div>
     )
