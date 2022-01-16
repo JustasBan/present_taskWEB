@@ -1,54 +1,205 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+:root {
+    /* table row fills: */
+    --tableOddFill: rgb(224, 204, 204);
+    --tableAllFill: #f9fafb;
+    --tableFirstRow: rgb(189, 135, 135);
+
+    /* table font fills: */
+    --tableFontColor: #3d3b3b;
+
+    /* table border fills: */
+    --tableBorderColor: rgb(7, 12, 12);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+    margin: 0;
+
+    font-family: 'Roboto';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
+
+/* Notification styles: */
 
 .change {
-  color: green;
-  background: lightgrey;
-  font-size: 20px;
-  border-style: solid;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+    color: green;
+    font-size: 20px;
+    background: lightgrey;
+
+    border-style: solid;
+    border-radius: 10px;
+    
+    padding: 10px;
+    position: absolute;
+    width: fit-content;
 }
 
 .error {
-  color: red;
-  background: lightgrey;
-  font-size: 20px;
-  border-style: solid;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+    color: red;
+    font-size: 20px;
+    background: lightgrey;
+
+    border-style: solid;
+    border-radius: 10px;
+
+    padding: 10px;
+    position: absolute;
+    width: fit-content;
 }
 
-.postBody {
-  white-space: pre-wrap
-}
+
+/*Menu styles:*/
 
 nav {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  min-height: 10vh;
-  background: black;
-  color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    min-height: 10vh;
+
+    background: var(--tableBorderColor);
+    color: var(--tableAllFill);
+    font-weight: bold;
 }
 
-.nav-links{
-  width: 50%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  list-style: none;
+.nav-links {
+    width:fit-content;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+}
+
+.nav-links > a {
+    margin-right: 10px;
+}
+
+
+/*Table styles: */
+
+.postBody {
+    white-space: pre-wrap
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table :hover {
+    cursor: pointer;
+}
+
+table td {
+    padding: 1vw;
+}
+
+table tbody td {
+    border: 2px solid var(--tableBorderColor);
+}
+
+table tbody tr {
+    color: var(--tableFontColor);
+}
+
+table tbody tr {
+    background-color: var(--tableAllFill);
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: var(--tableOddFill);
+}
+
+table tbody tr:hover {
+    background-color: var(--tableAllFill);
+}
+
+table tbody tr:nth-child(1) {
+    font-weight: 700;
+    color: var(--tableBorderColor);
+    background-color: var(--tableFirstRow);
+}
+
+table tbody tr td:nth-child(3) {
+    width: 20vw;
+}
+
+table tbody tr td:nth-child(4) {
+    width: 40vw;
+}
+
+
+/* Post styles: */
+
+.postWrap{
+    display: grid;
+    justify-content: center;
+}
+
+.postProperty{
+    font-weight: 500;
+}
+
+.postContainer{
+    display: flex;
+}
+
+.postContainer > h3 {
+    margin-top: 10px;
+}
+
+.postPropertyValue{
+    font-weight: 300;
+}
+
+
+/* Form styles: */
+
+.formsWrap{
+    display: flex;
+    justify-content: center;
+}
+
+.formsWrap > h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 15px;
+}
+
+.formsTextboxTitle{
+    width: 229px;
+    height: 50px;
+}
+
+.formsTextboxBody{
+    width: 229px;
+    height: 150px;
+}
+
+.formsButton{
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-top: 15px;
+
+    border-width: 2.5px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 23px;
+
+    background-color: var(--tableAllFill);
+    color: var(--tableBorderColor); 
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 17px;
+    text-align: center;
+    
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s; /* Safari */
+}
+
+.formsButton:hover{
+    background-color: var(--tableBorderColor); 
+    color: var(--tableAllFill);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.16);
 }

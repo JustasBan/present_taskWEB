@@ -5,15 +5,39 @@ import serverComms from '../services/serverComms'
 import Notification from './Notification'
 
 //helper components
-const Post = ({ postArg }) => {
+const Post = ({ postArg, loading }) => {
 
-  return (
-    <div>
-      <p>{postArg.userId} {postArg.id} {postArg.title}</p>
+  if (loading) {
+    return (
+      <h3>Post loading...</h3>
+    )
+  }
+  else {
+    return (
+      <div className='postWrap'>
+        <div className='postContainer'>
+          <h3 className='postProperty'>User id:</h3>
+          <h3 className='postPropertyValue'>{postArg.userId}</h3>
+        </div>
 
-      <div className="postBody">{postArg.body}</div>
-    </div>
-  )
+        <div className='postContainer'>
+          <h3 className='postProperty'>Post id:</h3>
+          <h3 className='postPropertyValue'>{postArg.id}</h3>
+        </div>
+
+        <div className='postContainer'>
+          <h3 className='postProperty'>Post title:</h3>
+          <h3 className='postPropertyValue'>{postArg.title}</h3>
+        </div>
+
+        <div className='postContainer'>
+          <h3 className='postProperty'>Post body:</h3>
+          <h3 className="postBody postPropertyValue">{postArg.body}</h3>
+        </div>
+      </div>
+    )
+  }
+
 }
 
 //------------------------------------------------------------
@@ -37,7 +61,7 @@ const PostDetail = () => {
     }, 5000)
   }
 
-  const showServerFail = () => {
+  const showServerFail = (error) => {
 
     setNotificationMode('error')
 
@@ -45,7 +69,7 @@ const PostDetail = () => {
       'Individual post data receive failed'
     )
 
-    console.log('GET promise failed')
+    console.error(error);
 
     setTimeout(() => {
       setNotificationMessage(null)
@@ -53,6 +77,7 @@ const PostDetail = () => {
   }
 
   //states:
+  const [loading, setLoading] = useState(true)
   const [post, setPost] = useState([])
   const [notificationMessage, setNotificationMessage] = useState(null)
   const [notificationMode, setNotificationMode] = useState('')
@@ -67,17 +92,18 @@ const PostDetail = () => {
       .then(initialPost => {
         setPost(initialPost)
         showServerSuccess()
+        setLoading(false)
       })
-      .catch(() => showServerFail())
+      .catch((error) => {
+        showServerFail(error)
+      })
   }, [])
-
-  //handlers:
 
   //return results:  
   return (
     <div>
       <Notification message={notificationMessage} className={notificationMode} />
-      <Post postArg={post} />
+      <Post postArg={post} loading={loading} />
     </div>
   )
 }

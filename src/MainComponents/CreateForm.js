@@ -21,7 +21,7 @@ const CreateForm = () => {
         }, 5000)
     }
 
-    const showServerFail = () => {
+    const showServerFail = (error) => {
 
         setNotificationMode('error')
 
@@ -29,7 +29,7 @@ const CreateForm = () => {
             'Individual\'s data sending (posting) failed'
         )
 
-        console.log('POST promise failed')
+        console.error(error)
 
         setTimeout(() => {
             setNotificationMessage(null)
@@ -71,27 +71,32 @@ const CreateForm = () => {
             .then(initialResponse => {
                 showServerSuccess(initialResponse)
             })
-            .catch(() => showServerFail())
+            .catch((error) => showServerFail(error))
     }
 
     //return results:  
     return (
         <div>
             <Notification message={notificationMessage} className={notificationMode} />
+<div  className='postWrap'>
+            <h2 className='formsWrap'>New record form</h2>
+            
+                <form onSubmit={addPost}>
+                        <div className='formsWrap'>
+                            <h3 >Title:</h3> 
+                            <textarea className='formsTextboxTitle' value={newTitle} onChange={handleTitleChange} />
+                        </div>
+                        <br />
+                        <div className='formsWrap'>
+                            <h3 >Body:</h3> 
+                            <textarea className='formsTextboxBody' value={newBody} onChange={handleBodyChange} />
+                        </div>
 
-            <h2>Post form</h2>
-
-            <form onSubmit={addPost}>
-                <div>
-                    Title: <input value={newTitle} onChange={handleTitleChange} />
-                    <br />
-                    Body: <input value={newBody} onChange={handleBodyChange} />
-                </div>
-
-                <div>
-                    <button type="submit">add</button>
-                </div>
-            </form>
+                    <div className='formsWrap'>
+                        <button className='formsButton' type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

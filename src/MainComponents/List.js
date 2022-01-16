@@ -1,39 +1,68 @@
 import React, { useState, useEffect } from 'react'
 import serverComms from '../services/serverComms'
 import Notification from './Notification'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 //helper components:
 
-const IndividualPost = ({ postArg }) => {
+const IndividualPost = ({ userId, id, title, body }) => {
+
+  //state and handler for navigation:
+  const navigate = useNavigate();
+
+  const handleRowClick = () => {
+    navigate(`/posts/${id}`);
+  }
 
   return (
-    <div>
-      <p>{postArg.userId} {postArg.id} {postArg.title}</p>
-
-      <div className="postBody">{postArg.body}</div>
-
-      <Link to={`/posts/${postArg.id}`}>
-        <button>details</button>
-      </Link>
-      <p>--------</p>
-    </div>
+    <tr onClick={handleRowClick}>
+      <td><div>{userId}</div></td>
+      <td> {id}</td>
+      <td> {title}</td>
+      <td className="postBody">{body}</td>
+    </tr>
   )
 }
 
-const Posts = ({ postsArg }) => {
-  return (
-    <div>
-      <h2>Posts List:</h2>
-      {postsArg.map(
-        post => <IndividualPost key={post.id} postArg={post} />
-      )}
-    </div>
-  )
+const Posts = ({ postsArg, loadingState }) => {
+
+  if (loadingState === false) {
+    let centerComponent = {
+      justifyContent: "center",
+      display: "flex"
+    }
+
+    return (
+      <div >
+        <h2 style={centerComponent}>Posts list:</h2>
+
+        <table style={centerComponent}>
+          <tbody>
+            <tr>
+              <td>userId</td>
+              <td>id</td>
+              <td>title</td>
+              <td>body</td>
+            </tr>
+
+            {postsArg.map(
+              post => <IndividualPost key={post.id} userId={post.userId} id={post.id} title={post.title} body={post.body} />
+            )}
+          </tbody>
+        </table>
+
+
+      </div>
+    )
+  }
+  else {
+    return (
+      <h2>Posts list loading...</h2>
+    )
+  }
 }
 
-//---------------------------------------------------------------------------
-
+//Main component:
 const List = () => {
 
   //notification helper functions:
@@ -52,7 +81,7 @@ const List = () => {
     }, 5000)
   }
 
-  const showServerFail = () => {
+  const showServerFail = (error) => {
 
     setNotificationMode('error')
 
@@ -60,7 +89,7 @@ const List = () => {
       'All data receive failed'
     )
 
-    console.log('GET promise failed')
+    console.error(error)
 
     setTimeout(() => {
       setNotificationMessage(null)
@@ -69,6 +98,7 @@ const List = () => {
 
   //states:
   const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
   const [notificationMessage, setNotificationMessage] = useState(null)
   const [notificationMode, setNotificationMode] = useState('')
 
@@ -78,13 +108,14 @@ const List = () => {
       .getAll()
       .then(initialPosts => {
         //setting posts:
-        setPosts(initialPosts)
 
+        setPosts(initialPosts)
+        setLoading(false)
         //state awareness:
         showServerSuccess()
       })
-      .catch(() => {
-        showServerFail()
+      .catch((error) => {
+        showServerFail(error)
       })
   }, [])
 
@@ -92,7 +123,7 @@ const List = () => {
   return (
     <div>
       <Notification message={notificationMessage} className={notificationMode} />
-      <Posts postsArg={posts} />
+      <Posts postsArg={posts} loadingState={loading} />
     </div>
   )
 }
