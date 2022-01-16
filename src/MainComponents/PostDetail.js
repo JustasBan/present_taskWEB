@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
-
 import serverComms from '../services/serverComms'
-import Notification from './Notification'
 
 //helper components
-const Post = ({ postArg, loading }) => {
+const Post = ( {postArg, loading} ) => {
 
   if (loading) {
     return (
@@ -37,50 +35,14 @@ const Post = ({ postArg, loading }) => {
       </div>
     )
   }
-
 }
 
-//------------------------------------------------------------
-
 //Main component
-const PostDetail = () => {
-
-  //notification helper functions:
-  const showServerSuccess = () => {
-
-    setNotificationMode('change')
-
-    setNotificationMessage(
-      'Individual post data received successfuly'
-    )
-
-    console.log('GET promise fullfilled')
-
-    setTimeout(() => {
-      setNotificationMessage(null)
-    }, 5000)
-  }
-
-  const showServerFail = (error) => {
-
-    setNotificationMode('error')
-
-    setNotificationMessage(
-      'Individual post data receive failed'
-    )
-
-    console.error(error);
-
-    setTimeout(() => {
-      setNotificationMessage(null)
-    }, 5000)
-  }
+const PostDetail = ({showServerFail, showServerSuccess}) => {
 
   //states:
   const [loading, setLoading] = useState(true)
   const [post, setPost] = useState([])
-  const [notificationMessage, setNotificationMessage] = useState(null)
-  const [notificationMode, setNotificationMode] = useState('')
 
   //define key parameter (which is post's id)
   let param = useParams().id;
@@ -91,8 +53,8 @@ const PostDetail = () => {
       .getOne(param)
       .then(initialPost => {
         setPost(initialPost)
-        showServerSuccess()
         setLoading(false)
+        showServerSuccess("Data received successfully", `GET request of post (id: ${initialPost.id}) received`)
       })
       .catch((error) => {
         showServerFail(error)
@@ -102,7 +64,6 @@ const PostDetail = () => {
   //return results:  
   return (
     <div>
-      <Notification message={notificationMessage} className={notificationMode} />
       <Post postArg={post} loading={loading} />
     </div>
   )

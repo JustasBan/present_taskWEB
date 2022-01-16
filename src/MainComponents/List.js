@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import serverComms from '../services/serverComms'
-import Notification from './Notification'
 import { useNavigate } from 'react-router-dom'
 
 //helper components:
@@ -24,7 +23,7 @@ const IndividualPost = ({ userId, id, title, body }) => {
   )
 }
 
-const Posts = ({ postsArg, loadingState }) => {
+const Posts = ({ postsArg, loadingState}) => {
 
   if (loadingState === false) {
     let centerComponent = {
@@ -51,7 +50,6 @@ const Posts = ({ postsArg, loadingState }) => {
           </tbody>
         </table>
 
-
       </div>
     )
   }
@@ -63,56 +61,22 @@ const Posts = ({ postsArg, loadingState }) => {
 }
 
 //Main component:
-const List = () => {
-
-  //notification helper functions:
-  const showServerSuccess = () => {
-
-    setNotificationMode('change')
-
-    setNotificationMessage(
-      'All data received successfuly'
-    )
-
-    console.log('GET promise fullfilled')
-
-    setTimeout(() => {
-      setNotificationMessage(null)
-    }, 5000)
-  }
-
-  const showServerFail = (error) => {
-
-    setNotificationMode('error')
-
-    setNotificationMessage(
-      'All data receive failed'
-    )
-
-    console.error(error)
-
-    setTimeout(() => {
-      setNotificationMessage(null)
-    }, 5000)
-  }
-
+const List = ({showServerFail, showServerSuccess}) => {
+  
   //states:
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
-  const [notificationMessage, setNotificationMessage] = useState(null)
-  const [notificationMode, setNotificationMode] = useState('')
 
   //effects:
   useEffect(() => {
     serverComms
       .getAll()
       .then(initialPosts => {
-        //setting posts:
-
         setPosts(initialPosts)
         setLoading(false)
+
         //state awareness:
-        showServerSuccess()
+        showServerSuccess("Received all data from server", "GET request fullfilled")
       })
       .catch((error) => {
         showServerFail(error)
@@ -122,7 +86,6 @@ const List = () => {
   //results:
   return (
     <div>
-      <Notification message={notificationMessage} className={notificationMode} />
       <Posts postsArg={posts} loadingState={loading} />
     </div>
   )

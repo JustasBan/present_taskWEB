@@ -1,40 +1,8 @@
 import React, { useState } from 'react'
 import serverComms from '../services/serverComms'
-import Notification from './Notification'
 
 //Main form's component
-const CreateForm = () => {
-
-    //notification helper functions:
-    const showServerSuccess = ({ id }) => {
-
-        setNotificationMode('change')
-
-        setNotificationMessage(
-            `Post's '${id}' data sent (posted) successfuly`
-        )
-
-        console.log(`Post's '${id}' POST promise fullfilled`)
-
-        setTimeout(() => {
-            setNotificationMessage(null)
-        }, 5000)
-    }
-
-    const showServerFail = (error) => {
-
-        setNotificationMode('error')
-
-        setNotificationMessage(
-            'Individual\'s data sending (posting) failed'
-        )
-
-        console.error(error)
-
-        setTimeout(() => {
-            setNotificationMessage(null)
-        }, 5000)
-    }
+const CreateForm = ({showServerFail, showServerSuccess}) => {
 
     //default values
     const USER_ID = 1
@@ -42,8 +10,6 @@ const CreateForm = () => {
     //states:
     const [newTitle, setNewTitle] = useState('')
     const [newBody, setNewBody] = useState('')
-    const [notificationMessage, setNotificationMessage] = useState(null)
-    const [notificationMode, setNotificationMode] = useState('')
 
     //handlers:
     const handleTitleChange = (event) => {
@@ -69,7 +35,7 @@ const CreateForm = () => {
         serverComms
             .create(tempPostObj)
             .then(initialResponse => {
-                showServerSuccess(initialResponse)
+                showServerSuccess('New record created in server' ,`Post (id: ${initialResponse.id}) created`)
             })
             .catch((error) => showServerFail(error))
     }
@@ -77,20 +43,19 @@ const CreateForm = () => {
     //return results:  
     return (
         <div>
-            <Notification message={notificationMessage} className={notificationMode} />
-<div  className='postWrap'>
-            <h2 className='formsWrap'>New record form</h2>
-            
+            <div className='postWrap'>
+                <h2 className='formsWrap'>New record form</h2>
+
                 <form onSubmit={addPost}>
-                        <div className='formsWrap'>
-                            <h3 >Title:</h3> 
-                            <textarea className='formsTextboxTitle' value={newTitle} onChange={handleTitleChange} />
-                        </div>
-                        <br />
-                        <div className='formsWrap'>
-                            <h3 >Body:</h3> 
-                            <textarea className='formsTextboxBody' value={newBody} onChange={handleBodyChange} />
-                        </div>
+                    <div className='formsWrap'>
+                        <h3 >Title:</h3>
+                        <textarea className='formsTextboxTitle' value={newTitle} onChange={handleTitleChange} />
+                    </div>
+                    
+                    <div className='formsWrap'>
+                        <h3 >Body:</h3>
+                        <textarea className='formsTextboxBody' value={newBody} onChange={handleBodyChange} />
+                    </div>
 
                     <div className='formsWrap'>
                         <button className='formsButton' type="submit">Add</button>

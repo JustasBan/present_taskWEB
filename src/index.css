@@ -183,7 +183,7 @@ table tbody tr td:nth-child(4) {
     margin-top: 15px;
 
     border-width: 2.5px;
-    border-color: black;
+    border-color: var(--tableBorderColor);
     border-style: solid;
     border-radius: 23px;
 
