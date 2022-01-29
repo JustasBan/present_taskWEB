@@ -1,2 +1,2 @@
-# Node packages used (so far):
-axios, react-router-dom
+### Node packages used (so far):
+react, axios, react-router-dom
