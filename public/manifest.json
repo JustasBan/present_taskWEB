@@ -1,6 +1,6 @@
 {
-  "short_name": "React app",
-  "name": "Simple React app for playing, testing, learning",
+  "short_name": "React web",
+  "name": "Simple React website for playing, testing, learning",
   "icons": [
     {
       "src": "favicon.ico",

@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from "react-router-dom";
+import {NotificationContext} from '../UI/NotificationContextProvider'
 import serverComms from '../../services/serverComms'
 import Post from './Post'
 
-const PostDetail = ({ showServerFail, showServerSuccess }) => {
+const PostDetail = () => {
 
   //states:
   const [loading, setLoading] = useState(true)
   const [post, setPost] = useState([])
+
+  let {showServerSuccess} = useContext(NotificationContext)
+  let {showServerFail} = useContext(NotificationContext)
 
   //define key parameter (which is post's id)
   let param = useParams().id;
@@ -19,14 +23,14 @@ const PostDetail = ({ showServerFail, showServerSuccess }) => {
       .then(initialPost => {
         setPost(initialPost)
         setLoading(false)
-        showServerSuccess("Data received successfully", `GET request of post (id: ${initialPost.id}) received`)
+        showServerSuccess("Received individual data successfully", `GET request of post (id: ${initialPost.id}) received`)
       })
       .catch((error) => {
         showServerFail(error)
       })
   }, [])
 
-  //return results:  
+  //return view:  
   return (
     <div>
       <Post postArg={post} loading={loading} />

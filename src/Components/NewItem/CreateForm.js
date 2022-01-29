@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import {NotificationContext} from '../UI/NotificationContextProvider'
 import serverComms from '../../services/serverComms'
 
 /*
@@ -8,24 +9,40 @@ import serverComms from '../../services/serverComms'
     create POST request to server
  */
 
-const CreateForm = ({showServerFail, showServerSuccess}) => {
+const CreateForm = () => {
 
     //default values
     const USER_ID = 1
 
     //states:
-    const [newTitle, setNewTitle] = useState('')
-    const [newBody, setNewBody] = useState('')
+    const [newInput, setNewInput] = useState(
+        {
+            title: '',
+            body: ''
+        }
+    )
 
-    //handlers:
-    const handleTitleChange = (event) => {
-        console.log(`Title: ${event.target.value}`)
-        setNewTitle(event.target.value)
-    }
+    let {showServerSuccess} = useContext(NotificationContext)
+    let {showServerFail} = useContext(NotificationContext)
 
-    const handleBodyChange = (event) => {
-        console.log(`Body: ${event.target.value}`)
-        setNewBody(event.target.value)
+    //handler:
+    const handleInputChange = (event) => {
+        let newerInput
+        switch (event.target.className) {
+            
+            case 'formsTextboxTitle':
+                newerInput = newInput
+                setNewInput({...newerInput, title: event.target.value})
+                break
+
+            case 'formsTextboxBody':
+                newerInput = newInput
+                setNewInput({...newerInput, body: event.target.value})
+                break
+
+            default:
+                break
+        }
     }
 
     //Posting function:
@@ -33,15 +50,14 @@ const CreateForm = ({showServerFail, showServerSuccess}) => {
         event.preventDefault()
 
         let tempPostObj = {
-            title: newTitle,
-            body: newBody,
+            ...newInput,
             userId: USER_ID
         }
 
         serverComms
             .create(tempPostObj)
             .then(initialResponse => {
-                showServerSuccess('New record created in server' ,`Post (id: ${initialResponse.id}) created`)
+                showServerSuccess('New record created in server', `Post (id: ${initialResponse.id}) created`)
             })
             .catch((error) => showServerFail(error))
     }
@@ -56,14 +72,14 @@ const CreateForm = ({showServerFail, showServerSuccess}) => {
                     <div className='formsWrap'>
                         <h3>Title:</h3>
                         <div className='formsWrapInner'>
-                            <textarea className='formsTextboxTitle' value={newTitle} onChange={handleTitleChange} />
+                            <textarea className='formsTextboxTitle' onChange={handleInputChange} />
                         </div>
                     </div>
-                    
+
                     <div className='formsWrap'>
                         <h3>Body:</h3>
                         <div className='formsWrapInner'>
-                            <textarea className='formsTextboxBody' value={newBody} onChange={handleBodyChange} />
+                            <textarea className='formsTextboxBody' onChange={handleInputChange} />
                         </div>
                     </div>
 
@@ -71,7 +87,7 @@ const CreateForm = ({showServerFail, showServerSuccess}) => {
                         <button className='formsButton' type="submit">Add</button>
                     </div>
                 </form>
-                
+
             </div>
         </div>
     )

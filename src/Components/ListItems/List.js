@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import serverComms from '../../services/serverComms'
+import {NotificationContext} from '../UI/NotificationContextProvider'
 import Posts from './Posts'
 
 /*
@@ -8,11 +9,14 @@ import Posts from './Posts'
   else it infinately loads
 */
 
-const List = ({ showServerFail, showServerSuccess }) => {
+const List = () => {
 
   //states:
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+
+  let {showServerSuccess} = useContext(NotificationContext)
+  let {showServerFail} = useContext(NotificationContext)
 
   //effects:
   useEffect(() => {
@@ -22,7 +26,6 @@ const List = ({ showServerFail, showServerSuccess }) => {
         setPosts(initialPosts)
         setLoading(false)
 
-        //state awareness:
         showServerSuccess("Received all data from server", "GET request fullfilled")
       })
       .catch((error) => {
