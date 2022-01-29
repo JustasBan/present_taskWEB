@@ -6,7 +6,6 @@ import {Link} from 'react-router-dom'
     simple menu component
  */
 
-//navigation component:
 const Menu = () => {
     return (
         <nav>

@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import List from './MainComponents/List'
-import Menu from './MainComponents/Menu'
-import PostDetail from './MainComponents/PostDetail'
-import CreateForm from './MainComponents/CreateForm'
-import Notification from './MainComponents/Notification'
+import List from './Components/ListItems/List'
+import Menu from './Components/UI/Menu'
+import PostDetail from './Components/DetailsItem/PostDetail'
+import CreateForm from './Components/NewItem/CreateForm'
+import Notification from './Components/UI/Notification'
 
 //Driver component:
 const App = () => {

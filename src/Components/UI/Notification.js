@@ -6,8 +6,7 @@ import React from 'react'
     notification's mode and message states
     in the environment you want to use it
 
-    for UX, it's recommended to
-    make helper functions and states,
+    for UX make helper functions and states,
     that handle notifications
     (for example: disapearing notifications after some time)
  */

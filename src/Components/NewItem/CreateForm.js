@@ -1,18 +1,13 @@
 import React, { useState } from 'react'
-import serverComms from '../services/serverComms'
+import serverComms from '../../services/serverComms'
 
 /*
     DESCRIPTION:
-    New record form component
+    New record form component.
     It will track input and
-    create POST request to server from it,
-    when "add" button is pressed
-    if request fails, user is notified
-    by "Notification" component in App 
-    (same for success)
+    create POST request to server
  */
 
-//Main form's component
 const CreateForm = ({showServerFail, showServerSuccess}) => {
 
     //default values
@@ -51,7 +46,7 @@ const CreateForm = ({showServerFail, showServerSuccess}) => {
             .catch((error) => showServerFail(error))
     }
 
-    //return results:  
+    //form view:  
     return (
         <div>
             <div className='postWrap'>

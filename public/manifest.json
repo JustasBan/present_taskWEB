@@ -1,6 +1,6 @@
 {
-  "short_name": "Internship",
-  "name": "Internship Qualification Task",
+  "short_name": "React app",
+  "name": "Simple React app for playing, testing, learning",
   "icons": [
     {
       "src": "favicon.ico",
