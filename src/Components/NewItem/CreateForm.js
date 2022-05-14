@@ -2,19 +2,11 @@ import React, { useState, useContext } from 'react'
 import {NotificationContext} from '../UI/NotificationContextProvider'
 import serverComms from '../../services/serverComms'
 
-/*
-    DESCRIPTION:
-    New record form component.
-    It will track input and
-    create POST request to server
- */
-
 const CreateForm = () => {
 
     //default values
     const USER_ID = 1
 
-    //states:
     const [newInput, setNewInput] = useState(
         {
             title: '',
@@ -25,7 +17,6 @@ const CreateForm = () => {
     let {showServerSuccess} = useContext(NotificationContext)
     let {showServerFail} = useContext(NotificationContext)
 
-    //handler:
     const handleInputChange = (event) => {
         let newerInput
         switch (event.target.className) {
@@ -45,7 +36,6 @@ const CreateForm = () => {
         }
     }
 
-    //Posting function:
     const addPost = (event) => {
         event.preventDefault()
 
@@ -62,7 +52,6 @@ const CreateForm = () => {
             .catch((error) => showServerFail(error))
     }
 
-    //form view:  
     return (
         <div>
             <div className='postWrap'>

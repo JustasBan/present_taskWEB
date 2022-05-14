@@ -1,11 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-/*
-    DESCRIPTION:
-    simple menu component
- */
-
 const Menu = () => {
     return (
         <nav>

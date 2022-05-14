@@ -7,10 +7,8 @@ import CreateForm from './Components/NewItem/CreateForm'
 import Notification from './Components/UI/Notification'
 import {NotificationContextProvider} from './Components/UI/NotificationContextProvider'
 
-//Driver component:
 const App = () => {
 
-  //generate routes, notification context and components
   return (
     <Router>
       <NotificationContextProvider>

@@ -1,13 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
-/*
-  Display individual table row
-  with received data of post
-*/
-
 const IndividualPost = ({ userId, id, title, body }) => {
 
-    //state and handler for navigation:
     const navigate = useNavigate();
   
     const handleRowClick = () => {

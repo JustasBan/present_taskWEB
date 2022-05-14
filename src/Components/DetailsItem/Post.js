@@ -1,10 +1,3 @@
-/*
-    DESCRIPTION:
-    Details page component helper,
-    which will generate the view
-*/
-
-//helper components
 const Post = ({ postArg, loading }) => {
 
     if (loading) {

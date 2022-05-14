@@ -6,17 +6,14 @@ import Post from './Post'
 
 const PostDetail = () => {
 
-  //states:
   const [loading, setLoading] = useState(true)
   const [post, setPost] = useState([])
 
   let {showServerSuccess} = useContext(NotificationContext)
   let {showServerFail} = useContext(NotificationContext)
 
-  //define key parameter (which is post's id)
   let param = useParams().id;
 
-  //effects:
   useEffect(() => {
     serverComms
       .getOne(param)
@@ -29,8 +26,7 @@ const PostDetail = () => {
         showServerFail(error)
       })
   }, [])
-
-  //return view:  
+  
   return (
     <div>
       <Post postArg={post} loading={loading} />

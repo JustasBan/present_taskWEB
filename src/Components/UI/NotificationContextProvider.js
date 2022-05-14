@@ -1,7 +1,5 @@
 import React, { createContext, useState } from 'react'
 
-//Notification context:
-
 export const NotificationContext = createContext({
     fail: () => { },
     succ: () => { },
@@ -41,7 +39,6 @@ export const NotificationContextProvider = ({ children }) => {
         }, 4000)
     }
     
-    //Notification states:
     const [notificationMessage, setNotificationMessage] = useState('')
     const [notificationMode, setNotificationMode] = useState('')
 

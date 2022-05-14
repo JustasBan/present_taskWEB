@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
+
+#container {
+  margin: 1rem;
+}
+
+.items {
+  margin-bottom: 1rem;
+}
+
 :root {
     /* table row fills: */
     --tableOddFill: rgb(224, 204, 204);
@@ -240,4 +249,28 @@ form{
 .centerComponent{
     justify-content: center;
     display: flex;
+}
+
+.pagination {
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+  }
+  
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+  
+.active {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+  
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
 }

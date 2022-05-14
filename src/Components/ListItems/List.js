@@ -1,24 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react'
 import serverComms from '../../services/serverComms'
-import {NotificationContext} from '../UI/NotificationContextProvider'
+import { NotificationContext } from '../UI/NotificationContextProvider'
 import Posts from './Posts'
-
-/*
-  Component does GET request,
-  and shows received data if successful,
-  else it infinately loads
-*/
 
 const List = () => {
 
-  //states:
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
 
-  let {showServerSuccess} = useContext(NotificationContext)
-  let {showServerFail} = useContext(NotificationContext)
+  let { showServerSuccess } = useContext(NotificationContext)
+  let { showServerFail } = useContext(NotificationContext)
 
-  //effects:
   useEffect(() => {
     serverComms
       .getAll()
@@ -33,12 +25,20 @@ const List = () => {
       })
   }, [])
 
-  //results:
-  return (
-    <div>
-      <Posts postsArg={posts} loadingState={loading} />
-    </div>
-  )
+  if (loading) {
+    return (
+      <h2 className='centerComponent'>Posts list loading...</h2>
+    )
+  }
+  else {
+    return (
+      
+      <div>
+        <Posts postsArg={posts} />
+      </div>
+    )
+  }
+
 }
 
 export default List; 

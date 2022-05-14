@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = 'https://jsonplaceholder.typicode.com/posts'
+const baseUrl = 'https://localhost:7203/api/Post'
 
 const getAll = async () => {
     const request = axios.get(baseUrl)
