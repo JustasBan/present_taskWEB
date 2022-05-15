@@ -140,7 +140,7 @@ const Posts = ({ postsArg }) => {
   return (
     <div >
       <h2 className='centerComponent'>Posts list:</h2>
-      <h3 className='centerComponent'>click on column's name to sort</h3>
+      <h3 className='centerComponent'>click on column's name to sort, search below table</h3>
 
       <table className='centerComponent'>
         <tbody>
