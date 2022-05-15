@@ -182,7 +182,9 @@ form{
 }
 
 .formsWrap{
-    display: inline;
+    display: flex;
+    justify-content: center;
+    margin-right: 10px;
 }
 
 .formsWrapInner{
