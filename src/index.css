@@ -251,6 +251,7 @@ form{
     display: flex;
 }
 
+/* pagination styles */
 .pagination {
     display: flex;
     list-style-type: none;

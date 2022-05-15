@@ -9,8 +9,20 @@ const CurrentPosts = ({ items }) => (
 )
 
 const Posts = ({ postsArg }) => {
+  let sortState = ({ key }) => {
+    switch (sortKeys[key]) {
+      case true:
+        return "(descend.)"
+      case false:
+        return "(ascend.)"
+
+      default:
+      return null
+    }
+  }
+
   let itemsPerPage = 5
-  const [sortKeys, setSortKeys] = useState({userId: true, id: true, title: true, body: true});
+  const [sortKeys, setSortKeys] = useState({ userId: null, id: null, title: null, body: null });
 
   //PAGINATION PART
   const [currentItems, setCurrentItems] = useState(postsArg);
@@ -31,68 +43,61 @@ const Posts = ({ postsArg }) => {
 
   //SORT PART
   const handleUserId = () => {
-    console.log("happen user");
     if (sortKeys.userId) {
-      setSortKeys((x) => ({...x, userId: false}))
-      setPosts((x) => (x.sort((a,b) => b.userId-a.userId)))
+      setSortKeys((x) => ({ ...x, userId: false }))
+      setPosts((x) => (x.sort((a, b) => b.userId < a.userId)))
     }
     else {
-      setSortKeys((x) => ({...x, userId: true}))
-      setPosts((x) => (x.sort((a,b) => a.userId-b.userId)))
+      setSortKeys((x) => ({ ...x, userId: true }))
+      setPosts((x) => (x.sort((a, b) => a.userId < b.userId)))
     }
   }
-  
+
   const handleId = () => {
-    console.log("happen id");
     if (sortKeys.id) {
-      setSortKeys((x) => ({...x, id: false}))
-      setPosts((x) => (x.sort((a,b) => b.id-a.id)))
+      setSortKeys((x) => ({ ...x, id: false }))
+      setPosts((x) => (x.sort((a, b) => b.id < a.id)))
     }
     else {
-      setSortKeys((x) => ({...x, id: true}))
-      setPosts((x) => (x.sort((a,b) => a.id-b.id)))
+      setSortKeys((x) => ({ ...x, id: true }))
+      setPosts((x) => (x.sort((a, b) => a.id < b.id)))
     }
   }
 
   const handleTitle = () => {
-    console.log("happen title");
     if (sortKeys.title) {
-      setSortKeys((x) => ({...x, title: false}))
-      setPosts((x) => (x.sort((a,b) => b.title>a.title)))
+      setSortKeys((x) => ({ ...x, title: false }))
+      setPosts((x) => (x.sort((a, b) => b.title > a.title)))
     }
     else {
-      setSortKeys((x) => ({...x, title: true}))
-      setPosts((x) => (x.sort((a,b) => a.title>b.title)))
+      setSortKeys((x) => ({ ...x, title: true }))
+      setPosts((x) => (x.sort((a, b) => a.title > b.title)))
     }
   }
 
   const handleBody = () => {
-    console.log("happen body");
     if (sortKeys.body) {
-      setSortKeys((x) => ({...x, body: false}))
-      setPosts((x) => (x.sort((a,b) => b.body>a.body)))
+      setSortKeys((x) => ({ ...x, body: false }))
+      setPosts((x) => (x.sort((a, b) => b.body > a.body)))
     }
     else {
-      setSortKeys((x) => ({...x, body: true}))
-      setPosts((x) => (x.sort((a,b) => a.body>b.body)))
+      setSortKeys((x) => ({ ...x, body: true }))
+      setPosts((x) => (x.sort((a, b) => a.body > b.body)))
     }
   }
 
   return (
     <div >
       <h2 className='centerComponent'>Posts list:</h2>
+      <h3 className='centerComponent'>click on column's name to sort</h3>
 
-      <button onClick={() => handleUserId()}>Sort by UserId</button>
-      <button onClick={() => handleId()}>Sort by Id</button>
-      <button onClick={() => handleTitle()}>Sort by Title</button>
-      <button onClick={() => handleBody()}>Sort by Body</button>
       <table className='centerComponent'>
         <tbody>
           <tr>
-            <td>userId</td>
-            <td>id</td>
-            <td>title</td>
-            <td>body</td>
+            <td onClick={() => handleUserId()}>userId {sortState({key: "userId"})}</td>
+            <td onClick={() => handleId()}>id {sortState({key: "id"})}</td>
+            <td onClick={() => handleTitle()}>title {sortState({key: "title"})}</td>
+            <td onClick={() => handleBody()}>body {sortState({key: "body"})}</td>
           </tr>
 
           <CurrentPosts items={currentItems} />
